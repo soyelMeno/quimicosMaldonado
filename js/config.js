@@ -6,11 +6,14 @@
 window.CONFIG = {
   moneda: "MXN",
 
+  /* IVA que se suma en el resumen (0.16 = 16%). Los precios de abajo van SIN IVA. */
+  iva: 0.16,
+
   /* WhatsApp de AC Letreros (solo dígitos, con lada de país). CÁMBIALO. */
-  whatsapp: "529931753531",
+  whatsapp: "529930000000",
 
   /* Nota al pie del resumen. Ajústala a tus condiciones reales. */
-  notaPrecios: "Precios en pesos mexicanos (MXN). Consulta vigencia y condiciones de IVA con tu asesor.",
+  notaPrecios: "Precios en pesos mexicanos (MXN). Los precios por opción se muestran antes de IVA; el total del resumen ya incluye IVA. Consulta vigencia con tu asesor.",
 
   /* ---------- IMÁGENES ----------
      Para reemplazar una imagen: sustituye el archivo en assets/img/
@@ -21,7 +24,8 @@ window.CONFIG = {
     muro:          "assets/img/fachada-0.jpg",   // instalación directo a muro
     bastidor:      "assets/img/fachada-1.jpg",   // bastidor metálico
     bastidorPanel: "assets/img/fachada-2.jpg",   // bastidor + panel compuesto
-    estructura:    "assets/img/fachada-3.jpg"    // estructura en toda el área superior
+    estructura:    "assets/img/fachada-3.jpg",   // estructura en toda el área superior
+    acrilico:      "assets/img/fachada-4.jpg"    // set de letreros de acrílico
   },
 
   /* ---------- LETRAS 3D ---------- */
@@ -56,6 +60,21 @@ window.CONFIG = {
     descripcion: "Que tu marca destaque también de noche."
   },
 
+  /* ---------- LETREROS DE ACRÍLICO (set adicional, opcional) ---------- */
+  acrilico: {
+    descripcion: "Base de acrílico transparente de 6 mm con letras semi planas de Alucobond en aluminio cepillado.",
+    items: [
+      { id: "acr-iso",      nombre: "Isotipo Químicos Maldonado", medidas: "87 × 87 cm",  precio: 6500 },
+      { id: "acr-tamiz",    nombre: "TamizMás",                   medidas: "77 × 215 cm", precio: 10800 },
+      { id: "acr-domedica", nombre: "DoMédica Integral",          medidas: "85 × 175 cm", precio: 10800 }
+    ],
+    iluminacion: {
+      precio: 3800,
+      titulo: "Iluminación en letreros de acrílico",
+      descripcion: "Se aplica a los letreros de acrílico que elijas."
+    }
+  },
+
   /* ---------- OPCIONES DE INSTALACIÓN ---------- */
   instalacion: [
     {
@@ -82,7 +101,7 @@ window.CONFIG = {
     {
       id: "estructura",
       nombre: "Estructura en toda el área superior",
-      precio: 38000,
+      precio: 50000,
       descripcion: "Estructura metálica forrada de panel compuesto en acabado gris mate en toda el área superior de la fachada.",
       imagen: "estructura"
     }
