@@ -228,7 +228,7 @@ img.is-missing { min-height: 160px; background: linear-gradient(135deg, var(--na
   backdrop-filter: blur(6px); transition: background .2s;
 }
 .opt__zoom:hover { background: var(--teal-dark); }
-.frame img[data-img="letras"], .summary__img img { cursor: zoom-in; }
+.frame img[data-img="letras"], .frame img[data-img="acrilico"], .summary__img img { cursor: zoom-in; }
 
 /* ---------- Visor ampliado ---------- */
 body:has(dialog[open]) { overflow: hidden; }
@@ -260,4 +260,41 @@ body:has(dialog[open]) { overflow: hidden; }
   .toggle__price { grid-column: 1 / -1; font-size: 1.1rem; }
   .summary__card { padding: 18px; }
   .total strong { font-size: 1.9rem; }
+}
+
+/* ---------- Subtotal e IVA en el resumen ---------- */
+.lines .lines__subtotal { margin-top: 6px; border-top: 1px solid var(--line); font-weight: 600; }
+
+/* ---------- Letreros de acrílico ---------- */
+.tag {
+  display: inline-block; vertical-align: middle; margin-left: 8px; padding: 3px 10px; border-radius: 999px;
+  background: #e7f6f2; color: var(--teal-dark); font: 600 .75rem var(--font-body); letter-spacing: .04em; text-transform: uppercase;
+}
+.acrilico { display: grid; gap: 24px; }
+.acr-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.acr {
+  position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+  padding: 16px; border: 2px solid var(--line); border-radius: 14px; background: #fff; cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+}
+.acr input { position: absolute; opacity: 0; pointer-events: none; }
+.acr__box {
+  display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; border: 2px solid #cbd5db;
+  color: transparent; font-weight: 700; transition: background .2s, border-color .2s, color .2s;
+}
+.acr:has(input:checked) { border-color: var(--teal); box-shadow: 0 8px 24px rgba(25,165,138,.22); }
+.acr:has(input:checked) .acr__box { background: var(--teal); border-color: var(--teal); color: #fff; }
+.acr:has(input:focus-visible) { outline: 3px solid rgba(25,165,138,.5); outline-offset: 2px; }
+.acr__text strong { display: block; font-family: var(--font-title); font-size: 1rem; }
+.acr__text small { color: var(--muted); }
+.acr__price { font-family: var(--font-title); font-weight: 800; color: var(--teal-dark); white-space: nowrap; }
+.acrilico .toggle { margin-top: 16px; }
+.toggle.is-disabled { opacity: .55; cursor: not-allowed; }
+.acr__hint { margin-top: 10px; font-size: .85rem; color: var(--muted); }
+@media (min-width: 768px) {
+  .acrilico { grid-template-columns: 1.2fr 1fr; align-items: start; }
+}
+@media (max-width: 480px) {
+  .acr { grid-template-columns: auto 1fr; }
+  .acr__price { grid-column: 2; font-size: 1.2rem; }
 }
