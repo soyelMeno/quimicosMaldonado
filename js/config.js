@@ -10,7 +10,7 @@ window.CONFIG = {
   iva: 0.16,
 
   /* WhatsApp de AC Letreros (solo dígitos, con lada de país). CÁMBIALO. */
-  whatsapp: "529930000000",
+  whatsapp: "529931753531",
 
   /* Nota al pie del resumen. Ajústala a tus condiciones reales. */
   notaPrecios: "Precios en pesos mexicanos (MXN). Los precios por opción se muestran antes de IVA; el total del resumen ya incluye IVA. Consulta vigencia con tu asesor.",
