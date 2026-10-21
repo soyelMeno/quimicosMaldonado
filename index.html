@@ -108,11 +108,45 @@
       </div>
     </section>
 
-    <!-- RESUMEN -->
-    <section class="section" id="resumen">
+    <!-- SECCIÓN 3: LETREROS DE ACRÍLICO -->
+    <section class="section" id="acrilico">
       <div class="wrap">
         <header class="section__head">
           <span class="step">03</span>
+          <div>
+            <h2>Letreros de acrílico <small class="tag">Opcional</small></h2>
+            <p data-acr-desc></p>
+          </div>
+        </header>
+
+        <div class="acrilico">
+          <figure class="frame">
+            <img data-img="acrilico" alt="Letreros de acrílico con letras de aluminio cepillado">
+          </figure>
+
+          <div class="acrilico__info">
+            <ul class="acr-list" id="acrilicoItems"></ul>
+
+            <label class="toggle" id="toggleLuzAcr">
+              <input type="checkbox" id="luzAcr" disabled>
+              <span class="toggle__switch" aria-hidden="true"></span>
+              <span class="toggle__text">
+                <strong data-acr-luz-titulo></strong>
+                <small data-acr-luz-desc></small>
+              </span>
+              <span class="toggle__price" data-acr-luz-precio>+ —</span>
+            </label>
+            <p class="acr__hint">Elige al menos un letrero para activar la iluminación.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMEN -->
+    <section class="section section--alt" id="resumen">
+      <div class="wrap">
+        <header class="section__head">
+          <span class="step">04</span>
           <div>
             <h2>Tu propuesta</h2>
             <p>Esto es lo que has armado.</p>
