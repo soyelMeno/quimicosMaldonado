@@ -298,3 +298,67 @@ body:has(dialog[open]) { overflow: hidden; }
   .acr { grid-template-columns: auto 1fr; }
   .acr__price { grid-column: 2; font-size: 1.2rem; }
 }
+
+/* ---------- Detalles de las letras 3D ---------- */
+.features { margin-top: 36px; }
+.features__title { font-size: 1.25rem; margin-bottom: 16px; }
+.features__grid { display: grid; gap: 14px; }
+.feature { padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+.feature h4 { font: 700 1.02rem var(--font-title); margin: 0 0 6px; color: var(--navy); }
+.feature p { color: var(--muted); font-size: .94rem; }
+.media { margin: 0 0 14px; border-radius: 12px; overflow: hidden; background: var(--navy-2); cursor: zoom-in; }
+.media img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+
+/* ---------- Detalles del montaje (dentro de la tarjeta) ---------- */
+.opt__more { margin-top: 4px; border-top: 1px dashed var(--line); padding-top: 12px; }
+.opt__more summary {
+  display: flex; align-items: center; min-height: 44px; cursor: pointer; list-style: none;
+  color: var(--teal-dark); font-weight: 600; font-size: .95rem;
+}
+.opt__more summary::-webkit-details-marker { display: none; }
+.opt__more summary::after { content: "+"; margin-left: auto; font-size: 1.3rem; line-height: 1; }
+.opt__more[open] summary::after { content: "–"; }
+.opt__more p { color: var(--muted); font-size: .92rem; margin-bottom: 12px; }
+
+/* ---------- Tiempos y condiciones ---------- */
+.cond { display: grid; gap: 18px; }
+.cond__card { padding: 24px; border-radius: var(--radius); background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.cond__card h3 { font-size: 1.15rem; margin-bottom: 14px; }
+.cond__list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; counter-reset: paso; }
+.cond__list li { position: relative; padding-left: 28px; font-size: .95rem; }
+.cond__list li::before {
+  content: "✓"; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%;
+  display: grid; place-items: center; background: #e7f6f2; color: var(--teal-dark); font-size: .75rem; font-weight: 700;
+}
+.cond__list--steps li::before { counter-increment: paso; content: counter(paso); background: var(--teal); color: #fff; }
+
+/* ---------- Anticipo en el resumen ---------- */
+.anticipo { margin: -6px 0 16px; padding: 12px 14px; border-radius: 12px; background: #e7f6f2; color: var(--teal-dark); font-size: .92rem; text-align: center; }
+.anticipo strong { font-family: var(--font-title); }
+
+@media (min-width: 768px) {
+  .features__grid { grid-template-columns: repeat(2, 1fr); }
+  .cond { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
+/* ---------- Letreros tipo bandera ---------- */
+.banderas { display: grid; gap: 22px; }
+.ban { position: relative; }
+.ban input { position: absolute; opacity: 0; pointer-events: none; }
+.ban__card {
+  display: block; height: 100%; border-radius: var(--radius); overflow: hidden; cursor: pointer;
+  background: #fff; border: 2px solid var(--line); transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.ban__card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.ban input:checked + .ban__card { border-color: var(--teal); box-shadow: 0 10px 30px rgba(25,165,138,.28); }
+.ban input:focus-visible + .ban__card { outline: 3px solid rgba(25,165,138,.5); outline-offset: 2px; }
+.ban input:checked ~ .opt__check { opacity: 1; transform: scale(1); }
+.ban__img { position: relative; aspect-ratio: 4 / 5; background: var(--navy-2); overflow: hidden; }
+.ban__img img { width: 100%; height: 100%; object-fit: cover; }
+.ban__body { padding: 18px; display: grid; gap: 8px; }
+@media (min-width: 768px) {
+  .banderas { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+}
+@media (max-width: 480px) {
+  .ban__body { padding: 16px; }
+}
