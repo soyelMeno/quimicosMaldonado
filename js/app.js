@@ -18,7 +18,8 @@
     luz: false,
     instalacionId: C.instalacion[0].id,
     acrilico: new Set(),
-    luzAcrilico: false
+    luzAcrilico: false,
+    banderas: new Set()
   };
 
   /* ---------- Imágenes (fáciles de reemplazar desde config.js) ---------- */
@@ -49,6 +50,31 @@
       </div>
     </li>`).join("");
 
+  /* ---------- Detalles con imagen opcional ---------- */
+  const media = (src, title) => src
+    ? `<figure class="media" data-zoom="${src}" data-title="${title}"><img src="${src}" alt="${title}" loading="lazy" onerror="this.parentNode.remove()"></figure>`
+    : "";
+
+  const D = C.detallesLetras;
+  $("#detallesLetras").innerHTML = `
+    <h3 class="features__title">${D.titulo}</h3>
+    <div class="features__grid">${D.items.map((f) => `
+      <article class="feature">
+        ${media(f.imagen, f.titulo)}
+        <h4>${f.titulo}</h4>
+        <p>${f.texto}</p>
+      </article>`).join("")}
+    </div>`;
+
+  /* ---------- Tiempos y condiciones ---------- */
+  const K = C.condiciones;
+  const anticipoPct = Math.round(K.anticipoPct * 100);
+  const fill = (t) => t.replace("{anticipo}", anticipoPct).replace("{garantia}", K.garantiaMeses);
+  $("#condTiempos").innerHTML = K.tiempos.map((t) => `<li>${fill(t)}</li>`).join("");
+  $("#condPago").innerHTML = K.pago.map((t) => `<li>${fill(t)}</li>`).join("");
+  $("[data-anticipo-pct]").textContent = anticipoPct + "%";
+  $("#brandLink").href = C.instagram;
+
   /* ---------- Letreros de acrílico ---------- */
   const A = C.acrilico;
   $("[data-acr-desc]").textContent = A.descripcion;
@@ -74,6 +100,29 @@
   }
   syncAcrToggle();
 
+  /* ---------- Letreros tipo bandera ---------- */
+  const B = C.banderas;
+  $("[data-ban-desc]").textContent = B.descripcion;
+  $("#banderasItems").innerHTML = B.items.map((i) => `
+    <div class="ban">
+      <input type="checkbox" id="${i.id}" value="${i.id}">
+      <label class="ban__card" for="${i.id}">
+        <div class="ban__img">
+          <img data-ban-img="${i.imagen}" alt="${i.nombre}" loading="lazy">
+          <button type="button" class="opt__zoom" data-zoom="${i.imagen}" data-title="${i.nombre}" aria-label="Ampliar imagen: ${i.nombre}">⤢ Ampliar</button>
+        </div>
+        <div class="ban__body">
+          <div class="opt__top">
+            <span class="opt__name">${i.nombre}</span>
+            <span class="opt__price">${money(i.precio)}</span>
+          </div>
+          <p class="opt__desc">Suministro e instalación incluidos.</p>
+        </div>
+      </label>
+      <span class="opt__check" aria-hidden="true">✓</span>
+    </div>`).join("");
+  $$("[data-ban-img]").forEach((el) => setImg(el, el.dataset.banImg));
+
   $("#install").innerHTML = C.instalacion.map((o, idx) => `
     <div class="opt reveal">
       <input type="radio" name="instalacion" id="opt-${o.id}" value="${o.id}" ${idx === 0 ? "checked" : ""}>
@@ -88,6 +137,7 @@
             <span class="opt__price">${money(o.precio)}</span>
           </div>
           <p class="opt__desc">${o.descripcion}</p>
+          ${o.detalle ? `<details class="opt__more"><summary>Ver detalles del montaje</summary><p>${o.detalle.texto}</p>${media(o.detalle.imagen, o.nombre)}</details>` : ""}
         </div>
       </label>
       <span class="opt__check" aria-hidden="true">✓</span>
@@ -113,8 +163,13 @@
       ? acrItems.map((i) => `<li><span>Acrílico: ${i.nombre}</span><span>${money(i.precio)}</span></li>`).join("") +
         `<li class="${acrLuz ? "" : "muted"}"><span>Iluminación acrílico</span><span>${acrLuz ? money(A.iluminacion.precio) : "No incluida"}</span></li>`
       : `<li class="muted"><span>Letreros de acrílico</span><span>No incluidos</span></li>`;
+    const banItems = B.items.filter((i) => state.banderas.has(i.id));
+    const banSum = banItems.reduce((s, i) => s + i.precio, 0);
+    const banLines = banItems.length
+      ? banItems.map((i) => `<li><span>${i.nombre}</span><span>${money(i.precio)}</span></li>`).join("")
+      : `<li class="muted"><span>Letreros tipo bandera</span><span>No incluidos</span></li>`;
     const subtotal = C.letras.precio + (state.luz ? C.iluminacion.precio : 0) + inst.precio +
-      acrSum + (acrLuz ? A.iluminacion.precio : 0);
+      acrSum + (acrLuz ? A.iluminacion.precio : 0) + banSum;
     const iva = subtotal * C.iva;
     const total = subtotal + iva;
     const ivaLabel = "IVA (" + Math.round(C.iva * 100) + "%)";
@@ -124,6 +179,7 @@
       <li class="${state.luz ? "" : "muted"}"><span>Iluminación</span><span>${state.luz ? money(C.iluminacion.precio) : "No incluida"}</span></li>
       <li><span>Instalación: ${inst.nombre}</span><span>${money(inst.precio)}</span></li>
       ${acrLines}
+      ${banLines}
       <li class="lines__subtotal"><span>Subtotal</span><span>${money(subtotal)}</span></li>
       <li><span>${ivaLabel}</span><span>${money(iva)}</span></li>`;
 
@@ -132,6 +188,8 @@
       el.classList.add("bump");
       setTimeout(() => el.classList.remove("bump"), 250);
     });
+
+    $("[data-anticipo]").textContent = money(total * K.anticipoPct);
 
     setImg(previewImg, inst.imagen);
     previewCap.textContent = inst.nombre;
@@ -146,6 +204,7 @@
         ? [...acrItems.map((i) => `• Acrílico ${i.nombre}: ${money(i.precio)}`),
            `• Iluminación acrílico: ${acrLuz ? money(A.iluminacion.precio) : "No"}`]
         : []),
+      ...banItems.map((i) => `• ${i.nombre}: ${money(i.precio)}`),
       `Subtotal: ${money(subtotal)}`,
       `${ivaLabel}: ${money(iva)}`,
       `TOTAL (IVA incluido): ${money(total)}`
@@ -159,6 +218,10 @@
     syncAcrToggle(); update();
   });
   luzAcr.addEventListener("change", (e) => { state.luzAcrilico = e.target.checked; update(); });
+  $("#banderasItems").addEventListener("change", (e) => {
+    if (e.target.checked) state.banderas.add(e.target.value); else state.banderas.delete(e.target.value);
+    update();
+  });
   $("#install").addEventListener("change", (e) => {
     if (e.target.name === "instalacion") { state.instalacionId = e.target.value; update(); }
   });
@@ -170,7 +233,7 @@
   const lbImg = $("img", lb);
   const lbCap = $(".lightbox__cap", lb);
   function openLightbox(key, title) {
-    lbImg.src = C.imagenes[key] || "";
+    lbImg.src = C.imagenes[key] || key;
     lbImg.alt = title;
     lbCap.textContent = title;
     lb.showModal();
@@ -187,7 +250,7 @@
   $("[data-img=acrilico]").addEventListener("click", () => openLightbox("acrilico", "Letreros de acrílico"));
 
   /* ---------- Animaciones de entrada ---------- */
-  const revealTargets = $$(".reveal, .inciso, .toggle, .summary__card");
+  const revealTargets = $$(".reveal, .inciso, .toggle, .summary__card, .feature, .cond__card, .ban");
   revealTargets.forEach((el) => el.classList.add("reveal"));
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver((entries) => {
