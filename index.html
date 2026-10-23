@@ -16,7 +16,7 @@
   <!-- ENCABEZADO -->
   <header class="topbar" id="topbar">
     <div class="wrap topbar__inner">
-      <a href="#inicio" class="brand" aria-label="AC Letreros">
+      <a href="https://www.instagram.com/ac_letreros/" class="brand" id="brandLink" target="_blank" rel="noopener" aria-label="AC Letreros en Instagram">
         <span class="brand__mark">AC</span>
         <span class="brand__text">Letreros</span>
       </a>
@@ -80,6 +80,8 @@
           </div>
         </div>
 
+        <div class="features" id="detallesLetras"></div>
+
         <!-- Iluminación -->
         <label class="toggle" id="toggleLuz">
           <input type="checkbox" id="luz">
@@ -142,11 +144,26 @@
       </div>
     </section>
 
-    <!-- RESUMEN -->
-    <section class="section section--alt" id="resumen">
+    <!-- SECCIÓN 4: LETREROS TIPO BANDERA -->
+    <section class="section section--alt" id="banderas">
       <div class="wrap">
         <header class="section__head">
           <span class="step">04</span>
+          <div>
+            <h2>Letreros tipo bandera <small class="tag">Opcional</small></h2>
+            <p data-ban-desc></p>
+          </div>
+        </header>
+
+        <div class="banderas" id="banderasItems"></div>
+      </div>
+    </section>
+
+    <!-- RESUMEN 5 -->
+    <section class="section section--alt" id="resumen">
+      <div class="wrap">
+        <header class="section__head">
+          <span class="step">05</span>
           <div>
             <h2>Tu propuesta</h2>
             <p>Esto es lo que has armado.</p>
@@ -165,6 +182,7 @@
               <span>Total</span>
               <strong data-total>—</strong>
             </div>
+            <p class="anticipo">Anticipo para iniciar (<span data-anticipo-pct></span>): <strong data-anticipo>—</strong></p>
             <a href="#" class="btn btn--wide" id="cta" target="_blank" rel="noopener">Solicitar esta propuesta por WhatsApp</a>
             <p class="note" data-nota></p>
           </div>
@@ -172,6 +190,30 @@
       </div>
     </section>
   </main>
+
+  <!-- SECCIÓN 6: TIEMPOS Y CONDICIONES -->
+    <section class="section" id="condiciones">
+      <div class="wrap">
+        <header class="section__head">
+          <span class="step">06</span>
+          <div>
+            <h2>Tiempos y condiciones</h2>
+            <p>Claridad desde el inicio: así trabajamos contigo.</p>
+          </div>
+        </header>
+
+        <div class="cond">
+          <article class="cond__card">
+            <h3>Tiempos</h3>
+            <ol class="cond__list cond__list--steps" id="condTiempos"></ol>
+          </article>
+          <article class="cond__card">
+            <h3>Pago, entrega y garantía</h3>
+            <ul class="cond__list" id="condPago"></ul>
+          </article>
+        </div>
+      </div>
+    </section>
 
   <!-- BARRA FIJA MÓVIL -->
   <div class="stickybar" id="stickybar">
